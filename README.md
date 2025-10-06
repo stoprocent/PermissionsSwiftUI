@@ -221,6 +221,14 @@ To change the primary (default Apple blue) and tertiary (default Apple red) colo
                                   blue: 169/255, opacity: 1),
                 toTertiary: Color(.systemPink))
 ```
+
+To also customize the close button color:
+```Swift
+.setAccentColor(toPrimary: Color(.sRGB, red: 56/255, green: 173/255,
+                                  blue: 169/255, opacity: 1),
+                toTertiary: Color(.systemPink),
+                toCloseButton: Color(.systemOrange))
+```
 <p align="center">
     <img src="https://github.com/jevonmao/PermissionsSwiftUI/blob/main/Resources/Color-custom-screenshot.png?raw=true" height="250" style="display: block; margin: auto;"/>
 </p>
@@ -234,8 +242,17 @@ To unleash the full customization of all button colors under all states, you nee
                                        buttonAllowed: ButtonColor(foregroundColor: Color,
                                                                   backgroundColor: Color),
                                        buttonDenied: ButtonColor(foregroundColor: Color,
-                                                                 backgroundColor: Color)))
+                                                                 backgroundColor: Color),
+                                       closeButton: ButtonColor(foregroundColor: Color,
+                                                                backgroundColor: Color)))
 ```
+
+To customize only the close button:
+```Swift
+.setCloseButtonColor(to: ButtonColor(foregroundColor: Color.red,
+                                     backgroundColor: Color.yellow))
+```
+
 For more information regarding the above method, reference the [official documentation](https://jevonmao.github.io/PermissionsSwiftUI/Structs/AllButtonColors.html).
 
 #### Customize Background Colors
@@ -319,6 +336,7 @@ let readTypes = Set([HKSampleType.quantityType(forIdentifier: .activeEnergyBurne
 ```Swift
 setAccentColor(to:)
 setAccentColor(toPrimary:toTertiary:)
+setAccentColor(toPrimary:toTertiary:toCloseButton:)
 ```
 **Customize title:**
 ```Swift
@@ -343,6 +361,7 @@ setPermissionComponent(for:description:)
 **Customize `allow` button's colors:**
 ```Swift
 setAllowButtonColor(to:)
+setCloseButtonColor(to:)
 ```
 **Customize background colors:**
 ```Swift

@@ -109,6 +109,20 @@ public extension CustomizableView {
         store.configStore.allButtonColors = colors
         return self
     }
+    
+    /**
+     Customizes the close/exit button color.
+
+     The customization of the close button color with this modifier applies to both `JMAlert` and `JMModal` views.
+     
+     - Parameters:
+        - to: The new customized close button color configuration
+     */
+    
+    @inlinable func setCloseButtonColor(to closeButtonColor: ButtonColor) -> some CustomizableView {
+        store.configStore.allButtonColors.closeButton = closeButtonColor
+        return self
+    }
 }
 
 
@@ -145,6 +159,29 @@ public extension CustomizableView {
     @inlinable func setAccentColor(toPrimary primaryColor: Color, toTertiary tertiaryColor: Color) -> some CustomizableView {
         let buttonColors = AllButtonColors(primaryColor: primaryColor,
                                            tertiaryColor: tertiaryColor)
+        store.configStore.allButtonColors = buttonColors
+        return self
+    }
+    
+    /**
+     Customizes the primary, tertiary, and close button colors of PermissionsSwiftUI views.
+
+     The customization of colors with this modifier applies to both `JMAlert` and `JMModal` views.
+     * The new primary color will replace the default Apple system blue color for image icons, as well as button foreground and background colors.
+     * The new tertiary color will replace the default Apple system red color for the `Denied` state of buttons.
+     * The new close button color will replace the default gray color for the close/exit button icon.
+     
+     - Parameters:
+        - toPrimary: The new customized primary color
+        - toTertiary: The new customized tertiary color
+        - toCloseButton: The new customized close button icon color
+        
+     */
+    
+    @inlinable func setAccentColor(toPrimary primaryColor: Color, toTertiary tertiaryColor: Color, toCloseButton closeButtonColor: Color) -> some CustomizableView {
+        let buttonColors = AllButtonColors(primaryColor: primaryColor,
+                                           tertiaryColor: tertiaryColor,
+                                           closeButtonColor: closeButtonColor)
         store.configStore.allButtonColors = buttonColors
         return self
     }

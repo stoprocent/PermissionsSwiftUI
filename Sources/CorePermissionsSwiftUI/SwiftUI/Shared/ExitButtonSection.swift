@@ -15,6 +15,7 @@ struct ExitButtonSection: View {
         screenSize.width < 400 ? 40-(1000-screenSize.width)/80 : 40
     }
     @EnvironmentObject var schemaStore: PermissionSchemaStore
+    @EnvironmentObject var store: PermissionStore
     var body: some View {
         Button(action: {
             #if !os(tvOS)
@@ -34,13 +35,13 @@ struct ExitButtonSection: View {
             if (schemaStore.store.configStore.restrictDismissal == false && schemaStore.store.configStore.autoDismiss == false) || schemaStore.shouldStayInPresentation == false {
                 
                 Circle()
-                    .fill(Color(.systemGray4))
+                    .fill(store.configStore.allButtonColors.closeButton.backgroundColor)
                     .frame(width: buttonSizeConstant, height: buttonSizeConstant)
                     .overlay(
                         Image(systemName: "xmark")
                             .font(.system(size: 18, weight: .bold, design: .rounded))
                             .minimumScaleFactor(0.2)
-                            .foregroundColor(Color(.systemGray))
+                            .foregroundColor(store.configStore.allButtonColors.closeButton.foregroundColor)
                             .padding(4)
                     )
             }

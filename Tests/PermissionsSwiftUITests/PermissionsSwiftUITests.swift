@@ -469,6 +469,29 @@ final class PermissionsSwiftUITests: XCTestCase {
         XCTAssertEqual(store.configStore.backgroundColors.dialogBackground, Color.green)
         XCTAssertEqual(store.configStore.backgroundColors.dialogBlurStyle, .systemUltraThinMaterialLight)
     }
+    
+    func testCloseButtonColorsConfiguration() {
+        var store = PermissionStore()
+        
+        // Test default close button colors
+        let defaultCloseButton = store.configStore.allButtonColors.closeButton
+        
+        XCTAssertEqual(defaultCloseButton.foregroundColor, Color(.systemGray))
+        XCTAssertEqual(defaultCloseButton.backgroundColor, Color(.systemGray4))
+        
+        // Test custom close button colors
+        let customCloseButton = ButtonColor(foregroundColor: Color.red, backgroundColor: Color.yellow)
+        store.configStore.allButtonColors.closeButton = customCloseButton
+        
+        XCTAssertEqual(store.configStore.allButtonColors.closeButton.foregroundColor, Color.red)
+        XCTAssertEqual(store.configStore.allButtonColors.closeButton.backgroundColor, Color.yellow)
+        
+        // Test AllButtonColors initializer with close button color
+        let allButtonColors = AllButtonColors(primaryColor: Color.blue, tertiaryColor: Color.red, closeButtonColor: Color.green)
+        
+        XCTAssertEqual(allButtonColors.closeButton.foregroundColor, Color.green)
+        XCTAssertEqual(allButtonColors.closeButton.backgroundColor, Color(.systemGray4))
+    }
 
 
 //    func testAlertViewSinglePermission(){

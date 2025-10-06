@@ -29,12 +29,14 @@ public struct AllButtonColors: Equatable {
         - buttonIdle: The button color configuration for the default, idle state
         - buttonAllowed: The button color configuration for the highlighted, allowed state
         - buttonDenied: The button color configuration for the user explicitly denied state
+        - closeButton: The button color configuration for the close/exit button
      */
-    public init(buttonIdle: ButtonColor, buttonAllowed: ButtonColor, buttonDenied: ButtonColor){
+    public init(buttonIdle: ButtonColor, buttonAllowed: ButtonColor, buttonDenied: ButtonColor, closeButton: ButtonColor){
         self.init()
         self.buttonIdle = buttonIdle
         self.buttonAllowed = buttonAllowed
         self.buttonDenied = buttonDenied
+        self.closeButton = closeButton
     }
     /**
      - parameters:
@@ -61,6 +63,14 @@ public struct AllButtonColors: Equatable {
         self.buttonDenied = buttonDenied
     }
     /**
+     - parameters:
+        - closeButton: The button color configuration for the close/exit button
+     */
+    public init(closeButton: ButtonColor){
+        self.init()
+        self.closeButton = closeButton
+    }
+    /**
      Initializes a new `AllbuttonColors` from the primary and tertiary colors
      
      Both `primaryColor` and `tertiaryColor` are non-required parameters. Colors without a given initializer parameter will be displayed with the default color.
@@ -68,8 +78,9 @@ public struct AllButtonColors: Equatable {
      - parameters:
         - primaryColor: The primary color, characterized by the default blue
         - tertiaryColor: The tertiary color, characterized by the default alert red
+        - closeButtonColor: The color for the close/exit button icon
      */
-    public init(primaryColor: Color?=nil, tertiaryColor: Color?=nil){
+    public init(primaryColor: Color?=nil, tertiaryColor: Color?=nil, closeButtonColor: Color?=nil){
         self.primaryColor = primaryColor ?? Color(.systemBlue)
         self.tertiaryColor = tertiaryColor ?? Color(.systemRed)
         self.buttonIdle = ButtonColor(foregroundColor: self.primaryColor,
@@ -78,6 +89,8 @@ public struct AllButtonColors: Equatable {
                                          backgroundColor: self.primaryColor)
         self.buttonDenied = ButtonColor(foregroundColor: Color(.white),
                                         backgroundColor: self.tertiaryColor)
+        self.closeButton = ButtonColor(foregroundColor: closeButtonColor ?? Color(.systemGray),
+                                       backgroundColor: Color(.systemGray4))
     }
     
     //MARK: Button Color States
@@ -90,4 +103,6 @@ public struct AllButtonColors: Equatable {
     public var buttonAllowed: ButtonColor
     ///The button color configuration under denied status defined by a `ButtonColor` struct
     public var buttonDenied: ButtonColor
+    ///The button color configuration for the close/exit button defined by a `ButtonColor` struct
+    public var closeButton: ButtonColor
 }
