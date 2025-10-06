@@ -50,7 +50,7 @@ import SwiftUI
             if shouldShowPermission {
                 Group{
                     #if !os(tvOS)
-                    Blur(style: .systemUltraThinMaterialDark)
+                    Blur(style: store.configStore.backgroundColors.dialogBlurStyle)
                         .transition(AnyTransition.opacity.animation(Animation.default.speed(1.6)))
                     #else
                     Blur(style: .extraDark)

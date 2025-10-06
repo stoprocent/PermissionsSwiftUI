@@ -21,7 +21,7 @@ struct ModalView: View {
                 HeaderView(exitButtonAction: {showModal = schemaStore.shouldStayInPresentation}, mainText: mainText)
                     
                 PermissionSection(showing: $showModal)
-                    .background(Color(.systemBackground))
+                    .background(store.configStore.backgroundColors.modalCardBackground)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                     .padding()
                     .frame(maxWidth:UIScreen.main.bounds.width-30)
@@ -37,7 +37,7 @@ struct ModalView: View {
             .padding(.bottom,30)
 
         }
-        .background(Color(.secondarySystemBackground))
+        .background(store.configStore.backgroundColors.modalBackground)
         .edgesIgnoringSafeArea(.all)
         .introspectViewController{
             if store.configStore.restrictDismissal ||

@@ -238,6 +238,35 @@ To unleash the full customization of all button colors under all states, you nee
 ```
 For more information regarding the above method, reference the [official documentation](https://jevonmao.github.io/PermissionsSwiftUI/Structs/AllButtonColors.html).
 
+#### Customize Background Colors
+PermissionsSwiftUI also allows you to customize the background colors for both modal and dialog views. You can customize the modal background, modal card background, dialog background, and dialog blur effects.
+
+To customize all background colors at once:
+```Swift
+.setBackgroundColors(to: BackgroundColors(
+    modalBackground: Color(.systemBackground),
+    modalCardBackground: Color(.secondarySystemBackground),
+    dialogBackground: Color(.systemBackground),
+    dialogBlurStyle: .systemUltraThinMaterialDark
+))
+```
+
+To customize only modal background colors:
+```Swift
+.setModalBackgroundColors(
+    modalBackground: Color(.systemBackground),
+    modalCardBackground: Color(.secondarySystemBackground)
+)
+```
+
+To customize only dialog background colors:
+```Swift
+.setDialogBackgroundColors(
+    dialogBackground: Color(.systemBackground),
+    dialogBlurStyle: .systemUltraThinMaterialLight
+)
+```
+
 ### Restrict Dismissal
 PermissionsSwiftUI will by default, prevent the user from dismissing the modal and alert before all permissions have been interacted with. This means if the user has not explicitly denied or allowed EVERY permission shown, they will not be able to dismiss the PermissionsSwiftUI view. This restricts dismissal behavior can be overridden by the `var restrictModalDismissal: Bool` or `var restrictAlertDismissal: Bool` properties.
 To disable the default restrict dismiss behavior:
@@ -314,6 +343,12 @@ setPermissionComponent(for:description:)
 **Customize `allow` button's colors:**
 ```Swift
 setAllowButtonColor(to:)
+```
+**Customize background colors:**
+```Swift
+setBackgroundColors(to:)
+setModalBackgroundColors(modalBackground:modalCardBackground:)
+setDialogBackgroundColors(dialogBackground:dialogBlurStyle:)
 ```
 **Automatically dismiss after last**
 ```Swift

@@ -440,6 +440,35 @@ final class PermissionsSwiftUITests: XCTestCase {
                                                                      permissionViewStyle: .modal))
         assertSnapshot(matching: altView, as: .image(precision: 0.99))
     }
+    
+    func testBackgroundColorsConfiguration() {
+        var store = PermissionStore()
+        
+        // Test default background colors
+        let defaultModalBackground = store.configStore.backgroundColors.modalBackground
+        let defaultModalCardBackground = store.configStore.backgroundColors.modalCardBackground
+        let defaultDialogBackground = store.configStore.backgroundColors.dialogBackground
+        let defaultDialogBlurStyle = store.configStore.backgroundColors.dialogBlurStyle
+        
+        XCTAssertEqual(defaultModalBackground, Color(.secondarySystemBackground))
+        XCTAssertEqual(defaultModalCardBackground, Color(.systemBackground))
+        XCTAssertEqual(defaultDialogBackground, Color(.systemBackground))
+        XCTAssertEqual(defaultDialogBlurStyle, .systemUltraThinMaterialDark)
+        
+        // Test custom background colors
+        let customBackgroundColors = BackgroundColors(
+            modalBackground: Color.red,
+            modalCardBackground: Color.blue,
+            dialogBackground: Color.green,
+            dialogBlurStyle: .systemUltraThinMaterialLight
+        )
+        store.configStore.backgroundColors = customBackgroundColors
+        
+        XCTAssertEqual(store.configStore.backgroundColors.modalBackground, Color.red)
+        XCTAssertEqual(store.configStore.backgroundColors.modalCardBackground, Color.blue)
+        XCTAssertEqual(store.configStore.backgroundColors.dialogBackground, Color.green)
+        XCTAssertEqual(store.configStore.backgroundColors.dialogBlurStyle, .systemUltraThinMaterialLight)
+    }
 
 
 //    func testAlertViewSinglePermission(){

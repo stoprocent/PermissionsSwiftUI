@@ -85,9 +85,11 @@ struct AllowButton: ViewModifier {
 
 @available(iOS 13.0, tvOS 13.0, *)
 struct JMAlertViewFrame: ViewModifier {
+    @EnvironmentObject var store: PermissionStore
+    
     func body(content: Content) -> some View {
         content
-            .background(Color(.systemBackground).opacity(0.8))
+            .background(store.configStore.backgroundColors.dialogBackground.opacity(0.8))
             .frame(width: screenSize.width > 375 ? 375 : screenSize.width-60)
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
             .edgesIgnoringSafeArea(.all)

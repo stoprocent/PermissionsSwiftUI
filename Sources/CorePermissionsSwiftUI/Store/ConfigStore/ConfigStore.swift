@@ -24,6 +24,9 @@ public struct ConfigStore {
     ///The color configuration for permission allow buttons
     public var allButtonColors = AllButtonColors()
     
+    ///The background color configuration for modal and dialog views
+    public var backgroundColors = BackgroundColors()
+    
     //MARK: Change Auto Dismiss Behaviors
     ///Whether to auto dismiss the view after last permission is allowed
     public var autoDismiss: Bool = false

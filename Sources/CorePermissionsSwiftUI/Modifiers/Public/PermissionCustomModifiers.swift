@@ -163,3 +163,58 @@ public extension CustomizableView {
     }
 }
 
+//MARK: Configure Background Colors
+@available(iOS 13.0, tvOS 13.0, *)
+public extension CustomizableView {
+    /**
+     Customizes the background colors for modal and dialog views.
+
+     The customization of background colors with this modifier applies to both `JMAlert` and `JMModal` views.
+     
+     To customize background colors:
+     1. Define a new instance of the `BackgroundColors` struct
+     2. Add the `setBackgroundColors(to colors:BackgroundColors)` modifier to your view
+     3. Pass in the `BackgroundColors` struct previously into the proper parameter
+     
+     - Parameters:
+        - to: The `BackgroundColors` struct containing all background color configurations
+     */
+    
+    @inlinable func setBackgroundColors(to colors: BackgroundColors) -> some CustomizableView {
+        store.configStore.backgroundColors = colors
+        return self
+    }
+    
+    /**
+     Customizes the modal background colors.
+
+     The customization applies to the `JMModal` view background colors.
+     
+     - Parameters:
+        - modalBackground: The background color for the modal view's main background
+        - modalCardBackground: The background color for the permission card in modal view
+     */
+    
+    @inlinable func setModalBackgroundColors(modalBackground: Color? = nil, modalCardBackground: Color? = nil) -> some CustomizableView {
+        store.configStore.backgroundColors.modalBackground = modalBackground ?? store.configStore.backgroundColors.modalBackground
+        store.configStore.backgroundColors.modalCardBackground = modalCardBackground ?? store.configStore.backgroundColors.modalCardBackground
+        return self
+    }
+    
+    /**
+     Customizes the dialog background colors.
+
+     The customization applies to the `JMAlert` view background colors.
+     
+     - Parameters:
+        - dialogBackground: The background color for the dialog view
+        - dialogBlurStyle: The blur style for the dialog overlay background
+     */
+    
+    @inlinable func setDialogBackgroundColors(dialogBackground: Color? = nil, dialogBlurStyle: UIBlurEffect.Style? = nil) -> some CustomizableView {
+        store.configStore.backgroundColors.dialogBackground = dialogBackground ?? store.configStore.backgroundColors.dialogBackground
+        store.configStore.backgroundColors.dialogBlurStyle = dialogBlurStyle ?? store.configStore.backgroundColors.dialogBlurStyle
+        return self
+    }
+}
+
