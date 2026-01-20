@@ -7,6 +7,7 @@
 
 import CorePermissionsSwiftUI
 import PermissionsSwiftUITracking
+import PermissionsSwiftUIBiometrics
 import PermissionsSwiftUIBluetooth
 import PermissionsSwiftUICalendar
 import PermissionsSwiftUICamera
@@ -33,9 +34,38 @@ public extension Array where Element == PermissionManager {
     static var allCases: [PermissionManager] {
         #if !os(tvOS)
         if #available(iOS 14, *) {
-            return [.location,.locationAlways,.photo, .microphone,.camera,.notification,.calendar,.bluetooth,.contacts,.motion,.reminders,.speech,.tracking,.health(categories: .init())]
+            return [.location,
+                    .locationAlways,
+                    .photo,
+                    .microphone,
+                    .camera,
+                    .notification,
+                    .calendar,
+                    .bluetooth,
+                    .contacts,
+                    .motion,
+                    .reminders,
+                    .speech,
+                    .tracking,
+                    .health(categories: .init()),
+                    .opticBiometrics,
+                    .faceID]
         } else {
-            return [.location,.locationAlways,.photo,.microphone,.camera,.notification,.calendar,.bluetooth,.contacts,.motion,.reminders,.speech,.health(categories: .init())]
+            return [.location,
+                    .locationAlways,
+                    .photo,
+                    .microphone,
+                    .camera,
+                    .notification,
+                    .calendar,
+                    .bluetooth,
+                    .contacts,
+                    .motion,
+                    .reminders,
+                    .speech,
+                    .health(categories: .init()),
+                    .opticBiometrics,
+                    .faceID]
         }
         #else
         if #available(tvOS 14, *) {
