@@ -30,13 +30,15 @@ public struct AllButtonColors: Equatable {
         - buttonAllowed: The button color configuration for the highlighted, allowed state
         - buttonDenied: The button color configuration for the user explicitly denied state
         - closeButton: The button color configuration for the close/exit button
+        - continueButton: The button color configuration for the continue button (carousel flow)
      */
-    public init(buttonIdle: ButtonColor, buttonAllowed: ButtonColor, buttonDenied: ButtonColor, closeButton: ButtonColor){
+    public init(buttonIdle: ButtonColor, buttonAllowed: ButtonColor, buttonDenied: ButtonColor, closeButton: ButtonColor, continueButton: ButtonColor? = nil){
         self.init()
         self.buttonIdle = buttonIdle
         self.buttonAllowed = buttonAllowed
         self.buttonDenied = buttonDenied
         self.closeButton = closeButton
+        self.continueButton = continueButton ?? buttonAllowed
     }
     /**
      - parameters:
@@ -71,10 +73,18 @@ public struct AllButtonColors: Equatable {
         self.closeButton = closeButton
     }
     /**
+     - parameters:
+        - continueButton: The button color configuration for the continue button (carousel flow)
+     */
+    public init(continueButton: ButtonColor){
+        self.init()
+        self.continueButton = continueButton
+    }
+    /**
      Initializes a new `AllbuttonColors` from the primary and tertiary colors
-     
+
      Both `primaryColor` and `tertiaryColor` are non-required parameters. Colors without a given initializer parameter will be displayed with the default color.
-     
+
      - parameters:
         - primaryColor: The primary color, characterized by the default blue
         - tertiaryColor: The tertiary color, characterized by the default alert red
@@ -91,10 +101,12 @@ public struct AllButtonColors: Equatable {
                                         backgroundColor: self.tertiaryColor)
         self.closeButton = ButtonColor(foregroundColor: closeButtonColor ?? Color(.systemGray),
                                        backgroundColor: Color(.systemGray4))
+        self.continueButton = ButtonColor(foregroundColor: Color(.white),
+                                         backgroundColor: self.primaryColor)
     }
     
     //MARK: Button Color States
-    
+
     @usableFromInline var primaryColor: Color
     var tertiaryColor: Color
     ///The button color configuration under idle status defined by a `ButtonColor` struct
@@ -105,4 +117,6 @@ public struct AllButtonColors: Equatable {
     public var buttonDenied: ButtonColor
     ///The button color configuration for the close/exit button defined by a `ButtonColor` struct
     public var closeButton: ButtonColor
+    ///The button color configuration for the continue button (carousel flow) defined by a `ButtonColor` struct
+    public var continueButton: ButtonColor
 }

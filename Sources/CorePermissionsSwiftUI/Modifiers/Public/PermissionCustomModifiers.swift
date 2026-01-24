@@ -114,13 +114,27 @@ public extension CustomizableView {
      Customizes the close/exit button color.
 
      The customization of the close button color with this modifier applies to both `JMAlert` and `JMModal` views.
-     
+
      - Parameters:
         - to: The new customized close button color configuration
      */
-    
+
     @inlinable func setCloseButtonColor(to closeButtonColor: ButtonColor) -> some CustomizableView {
         store.configStore.allButtonColors.closeButton = closeButtonColor
+        return self
+    }
+
+    /**
+     Customizes the continue button color (carousel flow).
+
+     The customization of the continue button color applies when carousel flow is enabled.
+
+     - Parameters:
+        - to: The new customized continue button color configuration
+     */
+
+    @inlinable func setContinueButtonColor(to continueButtonColor: ButtonColor) -> some CustomizableView {
+        store.configStore.allButtonColors.continueButton = continueButtonColor
         return self
     }
 }
@@ -251,6 +265,102 @@ public extension CustomizableView {
     @inlinable func setDialogBackgroundColors(dialogBackground: Color? = nil, dialogBlurStyle: UIBlurEffect.Style? = nil) -> some CustomizableView {
         store.configStore.backgroundColors.dialogBackground = dialogBackground ?? store.configStore.backgroundColors.dialogBackground
         store.configStore.backgroundColors.dialogBlurStyle = dialogBlurStyle ?? store.configStore.backgroundColors.dialogBlurStyle
+        return self
+    }
+}
+
+//MARK: Configure Carousel Flow
+@available(iOS 13.0, tvOS 13.0, *)
+public extension CustomizableView {
+    /**
+     Enables or disables the carousel permission flow.
+
+     The carousel flow replaces individual "Allow" buttons with status icons and a single "Continue" button.
+     When enabled, tapping Continue will sequentially request all undetermined permissions.
+
+     This is an opt-in feature that defaults to false for backward compatibility.
+
+     - Parameters:
+        - enabled: Whether to enable the carousel flow (default: false)
+     */
+
+    @inlinable func setCarouselFlow(enabled: Bool) -> some CustomizableView {
+        store.configStore.enableCarouselFlow = enabled
+        return self
+    }
+
+    /**
+     Customizes the text displayed on the continue button in different states.
+
+     The continue button text changes based on the carousel state:
+     * Before carousel: "Continue" (or custom text)
+     * During carousel: "Processing..." (or custom text)
+     * After carousel: "Done" (or custom text)
+
+     - Parameters:
+        - to: The `ContinueButtonTexts` struct containing custom text for each state
+     */
+
+    @inlinable func setContinueButtonTexts(to texts: ContinueButtonTexts) -> some CustomizableView {
+        store.configStore.continueButtonTexts = texts
+        return self
+    }
+
+    /**
+     Customizes the colors of permission status icons in carousel flow.
+
+     Status icons are displayed when carousel flow is enabled, showing the current state of each permission:
+     * Not determined: Circle icon (gray by default)
+     * Allowed: Checkmark icon (green by default)
+     * Denied: X mark icon (red by default)
+     * In progress: Animated circle (blue by default)
+
+     - Parameters:
+        - to: The `StatusIconColors` struct containing custom colors for each status
+     */
+
+    @inlinable func setStatusIconColors(to colors: StatusIconColors) -> some CustomizableView {
+        store.configStore.statusIconColors = colors
+        return self
+    }
+
+    /**
+     Sets the delay before auto-dismissing the view after carousel completion.
+
+     This delay only applies when `autoDismiss` is enabled. After the carousel completes,
+     the view will wait for this duration before automatically dismissing.
+
+     - Parameters:
+        - delay: The delay in seconds (default: 0.8)
+     */
+
+    @inlinable func setAutoDismissDelay(_ delay: TimeInterval) -> some CustomizableView {
+        store.configStore.autoDismissDelay = delay
+        return self
+    }
+}
+
+//MARK: Configure Color Scheme
+@available(iOS 13.0, tvOS 13.0, *)
+public extension CustomizableView {
+    /**
+     Forces a specific color scheme for the permissions view, overriding the system setting.
+
+     Use this to display the permission view in dark mode or light mode regardless of the user's
+     device settings.
+
+     - Parameters:
+        - colorScheme: The color scheme to use (.dark or .light). Pass nil to use system setting.
+
+     Example:
+     ```swift
+     .JMModal(showModal: $showModal, for: [.camera])
+         .setColorScheme(.dark)  // Always show in dark mode
+     ```
+     */
+
+    @inlinable func setColorScheme(_ colorScheme: ColorScheme?) -> some CustomizableView {
+        store.configStore.colorSchemeOverride = colorScheme
         return self
     }
 }

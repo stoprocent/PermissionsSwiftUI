@@ -20,7 +20,8 @@ struct PermissionSectionCell: View {
     @Binding var showing: Bool
     @EnvironmentObject var store: PermissionStore
     @EnvironmentObject var schemaStore: PermissionSchemaStore
-    
+    @EnvironmentObject var carouselStore: CarouselStore
+
     //Empty unauthorized array means all permissions have been interacted
     var shouldAutoDismiss: Bool {FilterPermissions.filterForUnauthorized(with: store.permissions, store: schemaStore).isEmpty}
     
@@ -58,6 +59,7 @@ struct PermissionSectionCell: View {
                 .foregroundColor(store.configStore.allButtonColors.primaryColor)
                 .font(.system(size: screenSizeConstant))
                 .frame(width: screenSizeConstant)
+                .padding(5)  // Add 5pt padding on all sides
                 .padding(.horizontal, 5)
                 .accessibility(identifier: "Permission icon")
             
@@ -81,20 +83,30 @@ struct PermissionSectionCell: View {
             .padding(.horizontal, 3)
             Spacer()
 
-            let useAltText = store.configStore.mainTexts.useAltButtonLabel
-            if schemaStore.permissionViewStyle == .alert {
-                //No animation for alert to avoid unwanted jiggle
-                AllowButtonSection(action: handlePermissionRequest,
-                                   useAltText: useAltText,
-                                   allowButtonStatus: $allowButtonStatus)
+            // Conditionally render based on carousel flow setting
+            if store.configStore.enableCarouselFlow {
+                // Carousel mode: show status icon
+                PermissionStatusIcon(
+                    status: getPermissionStatus(),
+                    isProcessing: isCurrentlyProcessing
+                )
+            } else {
+                // Traditional mode: show individual Allow button
+                let useAltText = store.configStore.mainTexts.useAltButtonLabel
+                if schemaStore.permissionViewStyle == .alert {
+                    //No animation for alert to avoid unwanted jiggle
+                    AllowButtonSection(action: handlePermissionRequest,
+                                       useAltText: useAltText,
+                                       allowButtonStatus: $allowButtonStatus)
+                }
+                else{
+                    //Separate case for modal style because an animation is needed for best user experience
+                    AllowButtonSection(action: handlePermissionRequest,
+                                       useAltText: useAltText,
+                                       allowButtonStatus: $allowButtonStatus)
+                }
             }
-            else{
-                //Separate case for modal style because an animation is needed for best user experience
-                AllowButtonSection(action: handlePermissionRequest,
-                                   useAltText: useAltText,
-                                   allowButtonStatus: $allowButtonStatus)
-            }
-            
+
         }
         .fixedSize(horizontal: false, vertical: true)
         .padding(.vertical, vertPaddingConstant)
@@ -149,5 +161,30 @@ struct PermissionSectionCell: View {
                     handler(schemaStore.successfulPermissions ?? nil, schemaStore.erroneousPermissions ?? nil)
                 }
             }
+    }
+
+    // MARK: - Carousel Flow Helpers
+
+    /// Get the current status of this permission for status icon display
+    func getPermissionStatus() -> PermissionStatus {
+        // Check if this permission is currently being processed in carousel
+        if isCurrentlyProcessing {
+            return .inProgress
+        }
+
+        // Otherwise, return status based on authorization status
+        switch permissionManager.authorizationStatus {
+        case .notDetermined:
+            return .notDetermined
+        case .authorized, .temporary, .limited:
+            return .allowed
+        case .denied:
+            return .denied
+        }
+    }
+
+    /// Check if this permission is currently being processed in the carousel
+    var isCurrentlyProcessing: Bool {
+        carouselStore.isProcessingPermission(permissionManager.permissionType)
     }
 }

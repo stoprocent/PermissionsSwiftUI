@@ -49,7 +49,7 @@ public enum PermissionType: Hashable, Equatable {
     /// Permission that grants access to Face ID only.
     ///
     /// - Note: Add `NSFaceIDUsageDescription` to your Info.plist to request Face ID access.
-    @available(iOS 13.0, tvOS, unavailable, macOS, unavailable) case faceID
+    @available(iOS 13.0, macOS, *) case faceID
     
     ///In order for app to track user's data across apps and websites, the tracking permission is needed
     @available(iOS 14, tvOS 14, *) case tracking

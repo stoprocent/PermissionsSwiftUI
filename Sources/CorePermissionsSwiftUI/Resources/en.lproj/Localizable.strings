@@ -4,6 +4,11 @@
 "button_denied" = "DENIED";
 "button_next" = "NEXT";
 
+/* MARK: Continue Button (Carousel Flow) */
+"button_continue" = "Continue";
+"button_processing" = "Processing...";
+"button_done" = "Done";
+
 /* MARK: UI labels */
 "permission_header" = "Need Permissions";
 "permission_primary_label" = "In order for you use certain features of this app, you need to give permissions. See description for each permission";
@@ -15,5 +20,17 @@
 
 "health_title" = "Health";
 "health_description" = "Allow to access your health information";
+
+/* MARK: Permission Status Icons (Carousel Flow) */
+"status_not_determined" = "Not determined";
+"status_allowed" = "Allowed";
+"status_denied" = "Denied";
+"status_in_progress" = "Requesting permission...";
+
+/* MARK: Accessibility Hints (Carousel Flow) */
+"hint_continue_start" = "Tap to start requesting permissions";
+"hint_continue_processing" = "Requesting permissions, please wait";
+"hint_continue_done" = "Tap to close";
+"hint_continue_dismiss" = "Tap to dismiss";
 
 

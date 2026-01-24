@@ -49,10 +49,27 @@ public struct ConfigStore {
     public var onDisappear: (()->Void)?
     /**
      Called when PermissionsSwiftUI view disappears with additional parameters that encapsulates the results
-     
+
      This completion handler will return additional details about the permission request's results, and execute action when PermissionsSwiftUI view disappears.
      */
     public var onDisappearHandler: ((_ successful: [JMResult]?, _ erroneous: [JMResult]?)->Void)?
+
+    //MARK: Carousel Flow Configuration
+    ///Whether to enable the carousel permission flow (opt-in, defaults to false for backward compatibility)
+    public var enableCarouselFlow: Bool = false
+
+    ///The delay in seconds before auto-dismissing after carousel completes (when autoDismiss is enabled)
+    public var autoDismissDelay: TimeInterval = 0.8
+
+    ///Text configuration for the continue button in different states
+    public var continueButtonTexts = ContinueButtonTexts()
+
+    ///Color configuration for permission status icons in carousel flow
+    public var statusIconColors = StatusIconColors()
+
+    //MARK: Color Scheme Override
+    ///Optional color scheme override (nil = use system setting, .dark = force dark mode, .light = force light mode)
+    public var colorSchemeOverride: ColorScheme? = nil
 }
 
 /**

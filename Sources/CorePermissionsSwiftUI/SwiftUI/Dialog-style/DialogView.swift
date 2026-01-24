@@ -14,6 +14,7 @@ struct DialogView: View {
     @Binding var showAlert: Bool
     @EnvironmentObject var store: PermissionStore
     @EnvironmentObject var schemaStore: PermissionSchemaStore
+    @StateObject private var carouselStore = CarouselStore()
 
     var mainText: MainTexts{store.mainTexts.contentChanged ? store.mainTexts : store.configStore.mainTexts}
     var paddingSize: CGFloat {
@@ -24,7 +25,17 @@ struct DialogView: View {
                 HeaderView(exitButtonAction: {showAlert = schemaStore.shouldStayInPresentation}, mainText: mainText)
                     .padding(.bottom, paddingSize/1.5)
                 PermissionSection(showing: $showAlert)
-                
+
+                // Show continue button if carousel flow is enabled
+                if store.configStore.enableCarouselFlow {
+                    Divider()
+                        .padding(.vertical, 8)
+
+                    ContinueButtonSection(showing: $showAlert)
+                        .padding(.horizontal, 10)
+                        .padding(.bottom, 8)
+                }
+
                 if store.permissions.count < 2{
                     Divider()
                 }
@@ -40,6 +51,18 @@ struct DialogView: View {
             }
             .padding(paddingSize)
             .alertViewFrame()
+            .preferredColorScheme(store.configStore.colorSchemeOverride)
+            .environmentObject(carouselStore)
+            .onAppear {
+                // Initialize carousel store with dependencies
+                if store.configStore.enableCarouselFlow {
+                    carouselStore.initialize(
+                        permissionStore: store,
+                        schemaStore: schemaStore,
+                        showing: $showAlert
+                    )
+                }
+            }
 
         
 
