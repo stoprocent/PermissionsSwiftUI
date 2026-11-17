@@ -25,7 +25,7 @@ import SwiftUI
     }
     var shouldShowPermission:Bool{
         //Handles case where configuration for autoCheckAuth is true
-        if store.configStore.autoCheckAuth || store.autoCheckAlertAuth {
+        if store.configStore.autoCheckAuth {
             if showing.wrappedValue &&
                 //schemaStore underterminedPermissions (askable permissions) must not be empty
                 !schemaStore.undeterminedPermissions.isEmpty {
@@ -57,8 +57,8 @@ import SwiftUI
                         .transition(AnyTransition.opacity.animation(Animation.default.speed(1.6)))
                     #endif
                     DialogView(showAlert: showing)
-                        .onAppear(perform: store.onAppear ?? store.configStore.onAppear)
-                        .onDisappear(perform: store.onDisappear ?? store.configStore.onDisappear)
+                        .onAppear(perform: store.configStore.onAppear)
+                        .onDisappear(perform: store.configStore.onDisappear)
                      
                 }
                 .transition(.asymmetric(insertion: insertTransition, removal: removalTransiton))

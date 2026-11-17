@@ -30,8 +30,8 @@ public class PermissionSchemaStore: ObservableObject {
     //MARK: Controls dismiss restriction
     var shouldStayInPresentation: Bool {
         if configStore.restrictDismissal ||
-            ((permissionViewStyle == .modal && store.restrictModalDismissal) ||
-                (permissionViewStyle == .alert && store.restrictAlertDismissal)) {
+            ((permissionViewStyle == .modal && store.configStore.restrictDismissal) ||
+                (permissionViewStyle == .alert && store.configStore.restrictDismissal)) {
             // number of interacted permissions equal to number
             // of all permissions means means everything has been
             // interacted with, thus if so, shouldStayInPresentation

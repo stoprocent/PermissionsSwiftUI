@@ -69,8 +69,8 @@ public class CarouselStore: ObservableObject {
 
         // Check if autoDismiss is enabled globally and for current style
         return configStore.autoDismiss &&
-               ((schemaStore.permissionViewStyle == .alert && permissionStore.autoDismissAlert) ||
-                (schemaStore.permissionViewStyle == .modal && permissionStore.autoDismissModal))
+               ((schemaStore.permissionViewStyle == .alert && permissionStore.configStore.autoDismiss) ||
+                (schemaStore.permissionViewStyle == .modal && permissionStore.configStore.autoDismiss))
     }
 
     // MARK: - Initialization

@@ -29,9 +29,7 @@ import Introspect
     }
     var shouldShowPermission: Binding<Bool>{
         Binding(get: {
-            //configStore.autoCheckAuth is added in newer version. autoCheckModalAuth is backward compatibility
-            if (store.configStore.autoCheckAuth ||
-                    (store.autoCheckModalAuth || store.autoCheckAlertAuth)) &&
+            if store.configStore.autoCheckAuth &&
                 //Prevent modal from unwanted dismiss while still presented
                 isModalNotShown {
                 //underterminedPermissions.isEmpty => No askable permissions => should not show modal
@@ -59,8 +57,8 @@ import Introspect
                 .sheet(isPresented: showing.combine(with: shouldShowPermission), content: {
                     ModalView(showModal: showing)
                         //Possible nil, to account for backward compatibility
-                        .onAppear(perform: store.onAppear ?? store.configStore.onAppear)
-                        .onDisappear(perform: store.onDisappear ?? store.configStore.onDisappear)
+                        .onAppear(perform: store.configStore.onAppear)
+                        .onDisappear(perform: store.configStore.onDisappear)
                         //Writing duplicate onAppear and OnDisappear is actually less lines of code
                         .onAppear{isModalNotShown=false}
                         .onDisappear{showing.wrappedValue = false; isModalNotShown=true}

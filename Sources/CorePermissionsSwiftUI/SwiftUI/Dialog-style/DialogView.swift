@@ -16,7 +16,7 @@ struct DialogView: View {
     @EnvironmentObject var schemaStore: PermissionSchemaStore
     @StateObject private var carouselStore = CarouselStore()
 
-    var mainText: MainTexts{store.mainTexts.contentChanged ? store.mainTexts : store.configStore.mainTexts}
+    var mainText: MainTexts{store.configStore.mainTexts}
     var paddingSize: CGFloat {
         screenSize.width < 400 ? 20-(1000-screenSize.width)/120 : 20
     }
